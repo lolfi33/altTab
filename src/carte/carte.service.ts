@@ -23,4 +23,8 @@ export class CarteService {
     const meal = this.mealRepository.create(createMealDto);
     return this.mealRepository.save(meal);
   }
+
+  async getAll(): Promise<Meal[]> {
+    return this.mealRepository.find();
+  }
 }
