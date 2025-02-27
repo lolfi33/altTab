@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CarteController } from './carte.controller';
 import { CarteService } from './carte.service';
 import { MealType } from './interfaces/mealType';
+import Meal from './entities/Meal';
 
 describe('CarteController', () => {
   let controller: CarteController;
@@ -17,12 +18,19 @@ describe('CarteController', () => {
   };
 
   beforeEach(async () => {
+    const mockService = {
+      getAll: jest.fn(),
+      ajouterPlat: jest.fn(),
+      create: jest.fn(),
+      updateQuantity: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CarteController],
       providers: [
         {
           provide: CarteService,
-          useValue: { create: jest.fn(), updateQuantity: jest.fn() },
+          useValue: mockService,
         },
       ],
     }).compile();
@@ -52,5 +60,33 @@ describe('CarteController', () => {
 
     expect(result).toEqual(updatedMeal);
     expect(service.updateQuantity).toHaveBeenCalledWith(1, 5);
+  });
+
+  it('should return array of meals', async () => {
+    const meals: Meal[] = [
+      {
+        id: 1,
+        name: 'Tarte aux pommes',
+        description: 'Délicieuse tarte',
+        type: MealType.DESSERT,
+        price: 5.5,
+        quantity: 0,
+      },
+      {
+        id: 2,
+        name: 'Tarte aux cerises',
+        description: 'Délicieuse tarte',
+        type: MealType.DESSERT,
+        price: 5,
+        quantity: 2,
+      },
+    ];
+
+    jest.spyOn(service, 'getAll').mockResolvedValue(meals);
+
+    const result = await controller.getAll();
+
+    expect(result).toEqual(meals);
+    expect(result.length).toBe(2);
   });
 });

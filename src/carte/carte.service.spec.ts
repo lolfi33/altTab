@@ -58,7 +58,6 @@ describe('CarteService', () => {
     });
   });
 
-
   it('should throw an error if the name already exists', async () => {
     repository.findOne.mockResolvedValue(mealEntity);
     const plat1: CreateMealDto = {
@@ -73,8 +72,8 @@ describe('CarteService', () => {
   it('should update the quantity of a meal', async () => {
     const updatedMeal = { ...mealEntity, quantity: 5 };
 
-    repository.findOne.mockResolvedValue(mealEntity); // Simule la présence du plat
-    repository.save.mockResolvedValue(updatedMeal); // Simule la sauvegarde
+    repository.findOne.mockResolvedValue(mealEntity);
+    repository.save.mockResolvedValue(updatedMeal);
 
     const result = await service.updateQuantity(1, 5);
 
@@ -87,12 +86,40 @@ describe('CarteService', () => {
   });
 
   it('should throw an error if the meal does not exist', async () => {
-    repository.findOne.mockResolvedValue(null); // Simule un plat inexistant
+    repository.findOne.mockResolvedValue(null);
 
     await expect(service.updateQuantity(99, 5)).rejects.toThrow(
       NotFoundException,
     );
     expect(repository.findOne).toHaveBeenCalledWith({ where: { id: 99 } });
     expect(repository.save).not.toHaveBeenCalled();
+  });
+
+  it('should return array of meals', async () => {
+    const meals = [
+      {
+        id: 1,
+        name: 'Tarte aux pommes',
+        description: 'Délicieuse tarte',
+        type: 'Dessert',
+        price: 5.5,
+        quantity: 0,
+      },
+      {
+        id: 2,
+        name: 'Tarte aux cerises',
+        description: 'Délicieuse tarte',
+        type: 'Dessert',
+        price: 5,
+        quantity: 2,
+      },
+    ];
+
+    repository.find = jest.fn().mockReturnValue(meals);
+
+    const result = await service.getAll();
+
+    expect(result).toEqual(meals);
+    expect(result.length).toEqual(2);
   });
 });
