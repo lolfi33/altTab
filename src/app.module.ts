@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'dotenv/config';
-import { Meal } from './entities/Meal';
+import { Meal } from './carte/entities/Meal';
+import { CarteService } from './carte/carte.service';
+import { CarteController } from './carte/carte.controller';
+import { CarteModule } from './carte/carte.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -16,8 +19,9 @@ import { Meal } from './entities/Meal';
       },
     }),
     TypeOrmModule.forFeature([Meal]),
+    CarteModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [CarteController],
+  providers: [CarteService],
 })
 export class AppModule {}
