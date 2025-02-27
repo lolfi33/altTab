@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { MealType } from '../interfaces/mealType';
+
 @Entity()
 export class Meal {
   @PrimaryGeneratedColumn()
@@ -15,4 +16,5 @@ export class Meal {
   @Column({ default: 0 })
   quantity: number;
 }
+
 export default Meal;

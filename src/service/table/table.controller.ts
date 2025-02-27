@@ -10,7 +10,7 @@ import {
 import { TableService } from './table.service';
 import { CreateTableDto } from './dto/create-table.dto';
 
-@Controller('table')
+@Controller('tables')
 export class TableController {
   constructor(private readonly tableService: TableService) {}
 

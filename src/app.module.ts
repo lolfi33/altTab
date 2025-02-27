@@ -14,7 +14,8 @@ import { CarteModule } from './carte/carte.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [Meal],
+      entities: [],
+      autoLoadEntities: true,
       synchronize: true,
       extra: {
         ssl: {
@@ -28,5 +29,4 @@ import { CarteModule } from './carte/carte.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {
-}
+export class AppModule {}
