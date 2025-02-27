@@ -124,7 +124,7 @@ describe('CarteService', () => {
     expect(result.length).toEqual(2);
   });
 
-  it('doit récupérer uniquement les plats en quantité supérieure à zéro', async () => {
+  it('should return meals with quantity greater than 0', async () => {
     const meals = [
       {
         id: 1,
