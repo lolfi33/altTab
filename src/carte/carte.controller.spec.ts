@@ -22,7 +22,7 @@ describe('CarteController', () => {
       providers: [
         {
           provide: CarteService,
-          useValue: { create: jest.fn() },
+          useValue: { create: jest.fn(), updateQuantity: jest.fn() },
         },
       ],
     }).compile();
@@ -31,7 +31,7 @@ describe('CarteController', () => {
     service = module.get<CarteService>(CarteService);
   });
 
-  it('devrait créer un plat via le controller', async () => {
+  it('should create a meal with the controller', async () => {
     const dto = {
       name: 'Tarte aux pommes',
       description: 'Délicieuse tarte',
@@ -42,5 +42,15 @@ describe('CarteController', () => {
     const result = await controller.create(dto);
     expect(result).toEqual(mealEntity);
     expect(service.create).toHaveBeenCalledWith(dto);
+  });
+
+  it('should change the quantity of the Tarte aux pommes from 0 to 5', async () => {
+    const updatedMeal = { ...mealEntity, quantity: 5 };
+    jest.spyOn(service, 'updateQuantity').mockResolvedValue(updatedMeal);
+
+    const result = await controller.updateQuantity(1, 5);
+
+    expect(result).toEqual(updatedMeal);
+    expect(service.updateQuantity).toHaveBeenCalledWith(1, 5);
   });
 });

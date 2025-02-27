@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Meal } from './entities/Meal';
@@ -21,6 +25,22 @@ export class CarteService {
     createMealDto.price = Math.round(createMealDto.price * 100) / 100;
 
     const meal = this.mealRepository.create(createMealDto);
+    return this.mealRepository.save(meal);
+  }
+
+  async getAll(): Promise<Meal[]> {
+    return this.mealRepository.find();
+  }
+
+  async updateQuantity(id: number, quantity: number): Promise<Meal> {
+    const meal = await this.mealRepository.findOne({ where: { id } });
+    if (!meal) {
+      throw new NotFoundException("Le plat demandé n'existe pas.");
+    }
+    meal.quantity = quantity;
+    if (quantity < 0) {
+      meal.quantity = 0;
+    }
     return this.mealRepository.save(meal);
   }
 }
