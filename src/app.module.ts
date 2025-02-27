@@ -5,8 +5,9 @@ import { Meal } from './carte/entities/Meal';
 import { CarteService } from './carte/carte.service';
 import { CarteController } from './carte/carte.controller';
 import { CarteModule } from './carte/carte.module';
-import { OrderModule } from './service/order/order.module';
-import { ReviewModule } from './service/review/review.module';
+import { OrderModule } from './restaurant/order/order.module';
+import { ReviewModule } from './restaurant/review/review.module';
+import { FacadesModule } from './facades/facades.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -24,6 +25,7 @@ import { ReviewModule } from './service/review/review.module';
     CarteModule,
     OrderModule,
     ReviewModule,
+    FacadesModule,
   ],
   controllers: [CarteController],
   providers: [CarteService],
