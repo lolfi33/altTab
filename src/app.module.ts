@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'dotenv/config';
-import { Meal } from './entities/Meal';
 import { TableModule } from './service/table/table.module';
 import { SeatingPlanModule } from './service/seating-plan/seating-plan.module';
+
+import { Meal } from './carte/entities/Meal';
+import { CarteModule } from './carte/carte.module';
 
 @Module({
   imports: [
@@ -21,8 +23,10 @@ import { SeatingPlanModule } from './service/seating-plan/seating-plan.module';
       },
     }),
     TypeOrmModule.forFeature([Meal]),
+    CarteModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+}
