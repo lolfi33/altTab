@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CarteService } from './carte.service';
 import { CreateMealDto } from './dto/create-meal.dto';
 import { Meal } from './entities/Meal';
@@ -7,13 +7,21 @@ import { Meal } from './entities/Meal';
 export class CarteController {
   constructor(private readonly mealService: CarteService) {}
 
+  @Post()
+  async create(@Body() createMealDto: CreateMealDto): Promise<Meal> {
+    return this.mealService.create(createMealDto);
+  }
+
   @Get()
   async getAll(): Promise<Meal[]> {
     return this.mealService.getAll();
   }
 
-  @Post()
-  async create(@Body() createMealDto: CreateMealDto): Promise<Meal> {
-    return this.mealService.create(createMealDto);
+  @Patch(':id/quantity')
+  async updateQuantity(
+    @Param('id') id: number,
+    @Body('quantity') quantity: number,
+  ): Promise<Meal> {
+    return this.mealService.updateQuantity(id, quantity);
   }
 }
