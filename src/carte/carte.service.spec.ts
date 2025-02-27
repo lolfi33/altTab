@@ -58,6 +58,7 @@ describe('CarteService', () => {
     });
   });
 
+
   it('should throw an error if the name already exists', async () => {
     repository.findOne.mockResolvedValue(mealEntity);
     const plat1: CreateMealDto = {
