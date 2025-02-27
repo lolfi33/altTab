@@ -24,4 +24,9 @@ export class CarteController {
   ): Promise<Meal> {
     return this.mealService.updateQuantity(id, quantity);
   }
+
+  @Get('carte')
+  async getCarte(): Promise<Meal[]> {
+    return this.mealService.getCarte();
+  }
 }

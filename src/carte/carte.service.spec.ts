@@ -29,6 +29,7 @@ describe('CarteService', () => {
             findOne: jest.fn(),
             create: jest.fn(),
             save: jest.fn(),
+            getCarte: jest.fn(),
           },
         },
       ],
@@ -121,5 +122,39 @@ describe('CarteService', () => {
 
     expect(result).toEqual(meals);
     expect(result.length).toEqual(2);
+  });
+
+  it('doit récupérer uniquement les plats en quantité supérieure à zéro', async () => {
+    const meals = [
+      {
+        id: 1,
+        name: 'Tarte aux pommes',
+        description: 'Délicieuse tarte',
+        type: 'Dessert',
+        price: 5.5,
+        quantity: 0,
+      },
+      {
+        id: 2,
+        name: 'Tarte aux cerises',
+        description: 'Délicieuse tarte',
+        type: 'Dessert',
+        price: 5,
+        quantity: 2,
+      },
+    ];
+
+    repository.find = jest.fn().mockImplementation((options) => {
+      if (options.where.quantity) {
+        return meals.filter((meal) => meal.quantity > 0);
+      }
+      return meals;
+    });
+    const result = await service.getCarte();
+
+    expect(repository.find).toHaveBeenCalledWith({
+      where: { quantity: expect.anything() },
+    });
+    expect(result.length).toEqual(1);
   });
 });

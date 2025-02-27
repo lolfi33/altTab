@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Meal } from './entities/Meal';
 import { CreateMealDto } from './dto/create-meal.dto';
 
@@ -42,5 +42,9 @@ export class CarteService {
       meal.quantity = 0;
     }
     return this.mealRepository.save(meal);
+  }
+
+  async getCarte(): Promise<Meal[]> {
+    return this.mealRepository.find({ where: { quantity: MoreThan(0) } });
   }
 }

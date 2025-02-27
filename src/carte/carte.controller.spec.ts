@@ -89,4 +89,30 @@ describe('CarteController', () => {
     expect(result).toEqual(meals);
     expect(result.length).toBe(2);
   });
+
+  it('should only return meals still in stock', async () => {
+    const meals = [
+      {
+        id: 1,
+        name: 'Tarte aux pommes',
+        description: 'Délicieuse tarte',
+        type: MealType.DESSERT,
+        price: 5.5,
+        quantity: 0,
+      },
+      {
+        id: 2,
+        name: 'Tarte aux cerises',
+        description: 'Délicieuse tarte',
+        type: MealType.DESSERT,
+        price: 5,
+        quantity: 2,
+      },
+    ];
+    const carte = meals.filter((meal) => meal.quantity > 0);
+    service.getCarte = jest.fn().mockResolvedValue(carte);
+    const result = await controller.getCarte();
+
+    expect(result.length).toBe(1);
+  });
 });
