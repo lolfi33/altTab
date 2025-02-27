@@ -38,6 +38,9 @@ export class CarteService {
       throw new NotFoundException("Le plat demandé n'existe pas.");
     }
     meal.quantity = quantity;
+    if (quantity < 0) {
+      meal.quantity = 0;
+    }
     return this.mealRepository.save(meal);
   }
 }
