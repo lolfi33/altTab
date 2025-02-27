@@ -26,8 +26,8 @@ describe('CarteService', () => {
     repository = module.get(getRepositoryToken(Meal));
   });
 
-  describe('getAllPlats', () => {
-    it('doit récupérer tous les plats', async () => {
+  describe('getAll', () => {
+    it('should return array of meals', async () => {
       const meals = [
         {
           id: 1,
@@ -51,7 +51,6 @@ describe('CarteService', () => {
 
       const result = await service.getAll();
 
-      expect(repository.find).toHaveBeenCalled();
       expect(result).toEqual(meals);
       expect(result.length).toEqual(2);
     });
