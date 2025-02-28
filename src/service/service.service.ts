@@ -1,35 +1,33 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Service } from './entities/Service';
-import { CreateServiceDto } from './dto/create-service.dto';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ServiceService {
-  constructor(
-    @InjectRepository(Service)
-    private serviceRepository: Repository<Service>,
-  ) {}
+  private activeTablePlan = {
+    id: 1,
+    tables: [
+      { tableNumber: 1, seats: 4 },
+      { tableNumber: 2, seats: 2 },
+      { tableNumber: 3, seats: 6 },
+    ],
+  };
 
-  async create(createServiceDto: CreateServiceDto): Promise<Service> {
-    const activeTablePlan = await this.getActiveTablePlan();
-    if (!activeTablePlan) {
-      throw new BadRequestException('Aucun plan de table actif.');
+  createService() {
+    if (!this.activeTablePlan) {
+      throw new HttpException(
+        'Aucun plan de table actif pour le restaurant.',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    const newService = this.serviceRepository.create({
-      ...createServiceDto,
-      openAt: new Date(),
-      tablePlan: activeTablePlan,
-    });
-    return this.serviceRepository.save(newService);
-  }
+    const frozenTablePlan = { ...this.activeTablePlan };
 
-  async getActiveTablePlan(): Promise<any> {
-    return {
-      tables: [
-        { id: 1, seats: 4 },
-        { id: 2, seats: 2 },
-      ],
+    const openAt = new Date();
+    const newService = {
+      id: uuidv4(),
+      openAt,
+      tablePlan: frozenTablePlan,
     };
+
+    return newService;
   }
 }

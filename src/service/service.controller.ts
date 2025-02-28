@@ -1,14 +1,17 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, HttpException, HttpStatus } from '@nestjs/common';
 import { ServiceService } from './service.service';
-import { CreateServiceDto } from './dto/create-service.dto';
-import { Service } from './entities/Service';
 
 @Controller('services')
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
   @Post()
-  async create(@Body() createServiceDto: CreateServiceDto): Promise<Service> {
-    return this.serviceService.create(createServiceDto);
+  createService() {
+    try {
+      const newService = this.serviceService.createService();
+      return newService;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }

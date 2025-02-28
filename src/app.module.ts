@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'dotenv/config';
 import { Meal } from './carte/entities/Meal';
-import { Service } from './service/entities/Service';
 import { CarteService } from './carte/carte.service';
 import { CarteController } from './carte/carte.controller';
 import { CarteModule } from './carte/carte.module';
@@ -14,8 +13,7 @@ import { ServiceModule } from './service/service.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [Meal, Service],
-      synchronize: true,
+      entities: [Meal],
       extra: {
         ssl: {
           rejectUnauthorized: false,
@@ -23,7 +21,6 @@ import { ServiceModule } from './service/service.module';
       },
     }),
     TypeOrmModule.forFeature([Meal]),
-    TypeOrmModule.forFeature([Service]),
     CarteModule,
     ServiceModule,
   ],
