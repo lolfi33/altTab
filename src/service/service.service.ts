@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { SeatingPlanService } from './seating-plan/seating-plan.service';
 
@@ -16,12 +16,10 @@ export class ServiceService {
     }
 
     const openAt = new Date();
-    const newService = {
+    return {
       id: uuidv4(),
       openAt,
       tablePlan: seatingPlan,
     };
-
-    return newService;
   }
 }

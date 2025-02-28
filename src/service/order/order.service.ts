@@ -36,6 +36,10 @@ export class OrderService {
     return this.executeOrderTransaction(table, createOrderDto.items, mealMap);
   }
 
+  async getOrder(id: string): Promise<Order> {
+    return this.orderRepository.findOne({ where: { id } });
+  }
+
   private async validateTable(tableId: number): Promise<TableEntity> {
     const table: TableEntity = await this.restaurantFacade.getTable(tableId);
     if (!table) {
@@ -155,9 +159,5 @@ export class OrderService {
         meal.quantity - item.quantity,
       );
     }
-  }
-
-  async getOrder(id: string): Promise<Order> {
-    return this.orderRepository.findOne({ where: { id } });
   }
 }

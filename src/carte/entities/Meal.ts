@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { MealType } from '../interfaces/mealType';
 import { Order } from '../../service/order/entities/order.entity';
 
