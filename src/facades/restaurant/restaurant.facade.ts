@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import Meal from '../../carte/entities/Meal';
 import { CarteService } from '../../carte/carte.service';
 import { TableService } from '../../service/table/table.service';
-import { TableEntity } from "../../service/table/entities/table.entity";
+import { TableEntity } from '../../service/table/entities/table.entity';
+import { SeatingPlanService } from '../../service/seating-plan/seating-plan.service';
+import { SeatingPlan } from '../../service/seating-plan/entities/seating-plan.entity';
 
 @Injectable()
 export class RestaurantFacade {
   constructor(
     private readonly mealService: CarteService,
     private readonly tableService: TableService,
+    private readonly seatingPlanService: SeatingPlanService,
   ) {}
 
   async getMeal(id: string): Promise<Meal> {
@@ -29,7 +32,9 @@ export class RestaurantFacade {
   }
 
   async getTable(id: number): Promise<TableEntity> {
-    return this.tableService.findOne(id);
+    const plan: SeatingPlan = await this.seatingPlanService.findActive();
+    const tables: TableEntity[] = JSON.parse(plan.tables);
+    return tables.find((table) => table.number === id);
   }
 
   async checkTableOccupied(id: number): Promise<boolean> {
