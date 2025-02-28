@@ -76,7 +76,7 @@ describe('CarteService', () => {
     repository.findOne.mockResolvedValue(mealEntity);
     repository.save.mockResolvedValue(updatedMeal);
 
-    const result = await service.updateQuantity(1, 5);
+    const result = await service.updateQuantity('1', 5);
 
     expect(result).toEqual(updatedMeal);
     expect(repository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
@@ -89,7 +89,7 @@ describe('CarteService', () => {
   it('should throw an error if the meal does not exist', async () => {
     repository.findOne.mockResolvedValue(null);
 
-    await expect(service.updateQuantity(99, 5)).rejects.toThrow(
+    await expect(service.updateQuantity('99', 5)).rejects.toThrow(
       NotFoundException,
     );
     expect(repository.findOne).toHaveBeenCalledWith({ where: { id: 99 } });

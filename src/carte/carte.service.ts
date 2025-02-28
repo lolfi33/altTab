@@ -22,7 +22,8 @@ export class CarteService {
     if (existingMeal) {
       throw new BadRequestException('Un plat avec ce nom existe déjà.');
     }
-    createMealDto.price = Math.round(createMealDto.price * 100) / 100;
+    if (createMealDto.type)
+      createMealDto.price = Math.round(createMealDto.price * 100) / 100;
 
     const meal = this.mealRepository.create(createMealDto);
     return this.mealRepository.save(meal);
