@@ -1,20 +1,28 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'dotenv/config';
+import { TableModule } from './service/table/table.module';
+import { SeatingPlanModule } from './service/seating-plan/seating-plan.module';
 import { Meal } from './carte/entities/Meal';
-import { CarteService } from './carte/carte.service';
-import { CarteController } from './carte/carte.controller';
 import { CarteModule } from './carte/carte.module';
-import { ServiceController } from './service/service.controller';
-import { ServiceService } from './service/service.service';
 import { ServiceModule } from './service/service.module';
+import { OrderModule } from './service/order/order.module';
+import { ReviewModule } from './service/review/review.module';
+import { FacadesModule } from './facades/facades.module';
 
 @Module({
   imports: [
+    TableModule,
+    SeatingPlanModule,
+    CarteModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [Meal],
+      entities: [],
+      autoLoadEntities: true,
+      synchronize: true,
+      ssl: false,
+      logging: true,
       extra: {
         ssl: {
           rejectUnauthorized: false,
@@ -23,9 +31,12 @@ import { ServiceModule } from './service/service.module';
     }),
     TypeOrmModule.forFeature([Meal]),
     CarteModule,
+    OrderModule,
+    ReviewModule,
+    FacadesModule,
     ServiceModule,
   ],
-  controllers: [CarteController, ServiceController],
-  providers: [CarteService, ServiceService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

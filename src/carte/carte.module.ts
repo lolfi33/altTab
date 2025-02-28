@@ -8,5 +8,6 @@ import { CarteService } from './carte.service';
   imports: [TypeOrmModule.forFeature([Meal])],
   controllers: [CarteController],
   providers: [CarteService],
+  exports: [CarteService],
 })
 export class CarteModule {}
