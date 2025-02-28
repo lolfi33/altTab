@@ -9,5 +9,6 @@ import { TableModule } from '../table/table.module';
   imports: [TableModule, TypeOrmModule.forFeature([SeatingPlan])],
   controllers: [SeatingPlanController],
   providers: [SeatingPlanService],
+  exports: [SeatingPlanService],
 })
 export class SeatingPlanModule {}
