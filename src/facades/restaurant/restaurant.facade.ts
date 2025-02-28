@@ -38,7 +38,7 @@ export class RestaurantFacade {
   }
 
   async checkTableOccupied(id: number): Promise<boolean> {
-    const table: TableEntity = await this.tableService.findOne(id);
+    const table: TableEntity = await this.getTable(id);
     return table ? table.isOccupied : false;
   }
 
