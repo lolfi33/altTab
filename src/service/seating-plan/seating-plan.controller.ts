@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common';
+
 import { SeatingPlanService } from './seating-plan.service';
 import { CreateSeatingPlanDto } from './dto/create-seating-plan.dto';
 
@@ -7,6 +16,7 @@ export class SeatingPlanController {
   constructor(private readonly seatingPlanService: SeatingPlanService) {}
 
   @Post()
+  @HttpCode(201)
   create(@Body() createSeatingPlanDto: CreateSeatingPlanDto) {
     //TODO : A remplacer par l'id du restaurant
     return this.seatingPlanService.create(createSeatingPlanDto, '1');
@@ -20,6 +30,11 @@ export class SeatingPlanController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.seatingPlanService.findOne(id);
+  }
+
+  @Get('active')
+  findActive() {
+    return this.seatingPlanService.findActive();
   }
 
   @Delete(':id')

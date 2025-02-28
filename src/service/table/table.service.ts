@@ -24,17 +24,10 @@ export class TableService {
     tableToSave.restaurantId = restaurantId;
     tableToSave.number = createTableDto.number;
     tableToSave.seats = createTableDto.seats;
+    tableToSave.isOccupied = false;
+    tableToSave.numberOfOccupants = 0;
 
-    try {
-      return await this.tableRepository.save(tableToSave);
-    } catch (error) {
-      if (error.code === '23505') {
-        throw new BadRequestException('Ce numéro de table existe déjà.');
-      } else {
-        console.log("Erreur lors de l'ajout de la table. Erreur : " + error);
-        throw new BadRequestException("Erreur lors de l'ajout de la table.");
-      }
-    }
+    return tableToSave;
   }
 
   findAll() {

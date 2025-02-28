@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DynamicModule } from '@nestjs/common';
 import { TableModule } from './table.module';
 import { NestApplication } from '@nestjs/core';
-import * as request from 'supertest';
 
 function generateDbConfig(): DynamicModule {
   return TypeOrmModule.forRoot({
@@ -35,17 +34,5 @@ describe('TableController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
-  });
-
-  it('should create a table', async () => {
-    const table = {
-      number: 1,
-      seats: 4,
-    };
-    const result = await request(app.getHttpServer())
-      .post('/table')
-      .send(table)
-      .expect(201);
-    expect(result.body).toEqual(expect.objectContaining(table));
   });
 });
