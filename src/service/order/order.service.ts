@@ -36,7 +36,7 @@ export class OrderService {
     return this.executeOrderTransaction(table, createOrderDto.items, mealMap);
   }
 
-  private async validateTable(tableId: number): Promise<any> {
+  private async validateTable(tableId: number): Promise<TableEntity> {
     const table = await this.restaurantFacade.getTable(tableId);
     if (!table) {
       throw new NotFoundException('Table non trouvée');
