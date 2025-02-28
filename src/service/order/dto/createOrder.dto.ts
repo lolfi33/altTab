@@ -18,8 +18,8 @@ export class OrderItemDto {
 }
 
 export class CreateOrderDto {
-  @IsString()
-  tableId: string;
+  @IsInt()
+  tableId: number;
 
   @IsArray()
   @ValidateNested()

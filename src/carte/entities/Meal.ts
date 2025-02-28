@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { MealType } from '../interfaces/mealType';
-import { Order } from '../../restaurant/order/entities/order.entity';
+import { Order } from '../../service/order/entities/order.entity';
 @Entity()
 export class Meal {
   @PrimaryGeneratedColumn('uuid')
