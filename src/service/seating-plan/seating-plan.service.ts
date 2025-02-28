@@ -65,7 +65,6 @@ export class SeatingPlanService {
     return this.seatingPlanRepository.findOne({ where: { id: id } });
   }
 
-
   findActive() {
     return this.seatingPlanRepository.findOne({ where: { isActivated: true } });
   }
