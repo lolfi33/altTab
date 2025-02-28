@@ -1,11 +1,6 @@
-import {
-  Column,
-  OneToMany,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { TableEntity } from '../../table/entities/table.entity';
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class SeatingPlan {
   @PrimaryColumn()
   restaurantId: string;
@@ -13,11 +8,8 @@ export class SeatingPlan {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(() => TableEntity, (table) => table.number, {
-    cascade: true,
-    nullable: false,
-  })
-  tables: TableEntity[];
+  @Column({ type: 'json' })
+  tables: string;
 
   @Column({ default: true })
   isActivated: boolean;

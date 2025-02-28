@@ -3,12 +3,11 @@ import { SeatingPlanService } from './seating-plan.service';
 import { SeatingPlanController } from './seating-plan.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeatingPlan } from './entities/seating-plan.entity';
-import { TableService } from '../table/table.service';
-import { TableEntity } from '../table/entities/table.entity';
+import { TableModule } from '../table/table.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SeatingPlan, TableEntity])],
+  imports: [TableModule, TypeOrmModule.forFeature([SeatingPlan])],
   controllers: [SeatingPlanController],
-  providers: [SeatingPlanService, TableService],
+  providers: [SeatingPlanService],
 })
 export class SeatingPlanModule {}

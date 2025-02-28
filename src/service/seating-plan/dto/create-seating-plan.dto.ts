@@ -1,7 +1,5 @@
-import { TableEntity } from '../../table/entities/table.entity';
+import { CreateTableDto } from '../../table/dto/create-table.dto';
 
 export class CreateSeatingPlanDto {
-  restaurantId: string;
-  id: string;
-  tables: TableEntity[];
+  tables: CreateTableDto[];
 }
