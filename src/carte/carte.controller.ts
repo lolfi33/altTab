@@ -19,7 +19,7 @@ export class CarteController {
 
   @Patch(':id/quantity')
   async updateQuantity(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body('quantity') quantity: number,
   ): Promise<Meal> {
     return this.mealService.updateQuantity(id, quantity);

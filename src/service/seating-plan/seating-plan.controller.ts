@@ -7,6 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
+
 import { SeatingPlanService } from './seating-plan.service';
 import { CreateSeatingPlanDto } from './dto/create-seating-plan.dto';
 

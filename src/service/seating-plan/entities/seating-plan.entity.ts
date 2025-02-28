@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { TableEntity } from '../../table/entities/table.entity';
 
 @Entity()
 export class SeatingPlan {

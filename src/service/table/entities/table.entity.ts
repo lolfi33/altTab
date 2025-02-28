@@ -6,6 +6,6 @@ export class TableEntity {
   seats: number;
 
   isOccupied: boolean;
-
+  
   numberOfOccupants: number;
 }

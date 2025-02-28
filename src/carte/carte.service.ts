@@ -32,7 +32,7 @@ export class CarteService {
     return this.mealRepository.find();
   }
 
-  async updateQuantity(id: number, quantity: number): Promise<Meal> {
+  async updateQuantity(id: string, quantity: number): Promise<Meal> {
     const meal = await this.mealRepository.findOne({ where: { id } });
     if (!meal) {
       throw new NotFoundException("Le plat demandé n'existe pas.");
